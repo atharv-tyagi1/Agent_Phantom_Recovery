@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     # Database (Supabase / Postgres)
     SUPABASE_DB_URL: str = "postgresql://postgres:postgres@localhost:5432/postgres"
 
+    # LLM Providers
+    OPENROUTER_API_KEY: str = "placeholder-openrouter-key"
+    ZENMUX_API_KEY: str = "placeholder-zenmux-key"
+
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
 

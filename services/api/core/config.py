@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"
 
+    # Tool System Sandbox
+    WORKSPACE_ROOT: str = "workspaces"
+
     # Supabase Auth
     SUPABASE_URL: str = "https://your-project.supabase.co"
     SUPABASE_KEY: str = "your-supabase-anon-key"

@@ -5,6 +5,7 @@ from core.tools.git import (
     GitStatusTool, GitDiffTool, GitAddTool,
     GitCommitTool, GitBranchTool, GitCloneTool
 )
+from core.tools.ocr import NemotronOCRTool
 
 def build_default_registry() -> ToolRegistry:
     """
@@ -29,7 +30,11 @@ def build_default_registry() -> ToolRegistry:
     registry.register(GitBranchTool())
     registry.register(GitCloneTool())
 
+    # Vision / OCR tools
+    registry.register(NemotronOCRTool())
+
     return registry
 
 # Singleton registry used across the application
 tool_registry = build_default_registry()
+

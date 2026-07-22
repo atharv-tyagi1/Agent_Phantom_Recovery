@@ -13,7 +13,7 @@ from alembic import context
 
 from core.config import settings
 from db.session import Base
-from db.models import User, Project, Repository, Task, Execution, AuditLog  # noqa: F401 — imported for metadata registration
+from db.models import User, Project, Repository, Task, Execution, AuditLog, ProjectMemory, ExperienceMemory  # noqa: F401 — imported for metadata registration
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

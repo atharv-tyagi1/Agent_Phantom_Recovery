@@ -45,11 +45,22 @@ async def shutdown_event():
 
 # ── Routers ──────────────────────────────────────────────────────────────────
 app.include_router(auth_router)
-from api.routes import projects_router, repositories_router, tasks_router, executions_router
+from api.routes import (
+    projects_router, repositories_router, tasks_router,
+    executions_router, repo_intel_router
+)
+from api.routes.memory import router as memory_router
+
 app.include_router(projects_router)
 app.include_router(repositories_router)
 app.include_router(tasks_router)
 app.include_router(executions_router)
+app.include_router(memory_router)
+app.include_router(repo_intel_router)
+
+from api.routes.ws import router as ws_router
+app.include_router(ws_router)
+
 
 
 # ── Health / Readiness ───────────────────────────────────────────────────────

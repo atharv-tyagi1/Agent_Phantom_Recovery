@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 
-interface BrowserPaneProps {
-  projectId: string;
-}
-
-export function BrowserPane({ projectId }: BrowserPaneProps) {
+export function BrowserPane({ projectId }: { projectId: string }) {
   const [url, setUrl] = useState("about:blank");
-  const [inputUrl, setInputUrl] = useState("");
+  const [inputUrl, setInputUrl] = useState("http://localhost:3001");
 
   const navigate = () => {
     let target = inputUrl.trim();
@@ -18,51 +14,47 @@ export function BrowserPane({ projectId }: BrowserPaneProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-neutral-950">
-      {/* Pane Header */}
-      <div className="flex items-center px-4 h-10 border-b border-white/[0.05] shrink-0 gap-2">
-        <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider shrink-0">Browser</span>
-        <div className="flex-1 flex items-center gap-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-2">
-          <span className="text-neutral-700 text-xs">🌐</span>
+    <div className="flex flex-col h-full bg-[#0b0f19]">
+      <div className="ide-pane-header gap-2">
+        <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider shrink-0">
+          🌐 Browser Sandbox
+        </span>
+        <div className="flex-1 flex items-center gap-1.5 bg-[#111827] border border-white/[0.1] rounded px-2.5 py-1">
+          <span className="text-gray-500 text-xs">🔒</span>
           <input
             value={inputUrl}
             onChange={(e) => setInputUrl(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && navigate()}
-            placeholder="Enter URL to preview…"
-            className="flex-1 bg-transparent text-xs text-neutral-300 placeholder-neutral-700 outline-none py-1.5"
+            placeholder="Enter preview URL…"
+            className="flex-1 bg-transparent text-xs text-gray-200 placeholder-gray-600 outline-none font-mono"
           />
         </div>
         <button
           onClick={navigate}
-          className="shrink-0 px-2.5 py-1 text-xs rounded-md bg-white/[0.05] border border-white/[0.06] text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.08] transition-all"
-        >
-          Go
+          className="px-3 py-1 text-xs rounded font-bold font-mono bg-amber-500/20 text-amber-400 border border-amber-500/40 hover:bg-amber-500/30 transition-all">
+          Navigate
         </button>
-        {url !== "about:blank" && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="shrink-0 px-2.5 py-1 text-xs rounded-md bg-white/[0.05] border border-white/[0.06] text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.08] transition-all"
-          >
-            ↗
-          </a>
-        )}
       </div>
 
-      {/* iframe Preview */}
       {url === "about:blank" ? (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <span className="text-4xl mb-3 block">🌐</span>
-            <p className="text-neutral-600 text-sm">Enter a URL to preview</p>
-            <p className="text-neutral-700 text-xs mt-1">Agent-generated previews will load here automatically</p>
+        <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl mb-3">
+            🌐
           </div>
+          <h3 className="text-white font-bold text-sm mb-1">Sandboxed Visual Browser</h3>
+          <p className="text-gray-400 text-xs max-w-sm leading-relaxed mb-4">
+            Kimi K3 inspects page layout, visual element positions, and visual verification screenshots in real time.
+          </p>
+          <button
+            onClick={() => setUrl(inputUrl)}
+            className="gradient-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-950 shadow-md">
+            Load Preview →
+          </button>
         </div>
       ) : (
         <iframe
           src={url}
-          className="flex-1 w-full border-0"
+          className="flex-1 w-full border-0 bg-white"
           sandbox="allow-scripts allow-same-origin allow-forms"
           title="Browser Preview"
         />

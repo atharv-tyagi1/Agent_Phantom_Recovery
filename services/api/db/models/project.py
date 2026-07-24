@@ -15,6 +15,7 @@ class Project(Base):
     __tablename__ = "projects"
 
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    workspace_id = Column(String, ForeignKey("workspaces.id", ondelete="CASCADE"), nullable=True, index=True)
     owner_id = Column(String, ForeignKey("users.id"), nullable=False, index=True)
     name = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
@@ -28,6 +29,7 @@ class Project(Base):
     )
 
     # Relationships
+    workspace = relationship("Workspace", back_populates="projects")
     owner = relationship("User", backref="projects")
     repositories = relationship("Repository", back_populates="project", cascade="all, delete-orphan")
     tasks = relationship("Task", back_populates="project", cascade="all, delete-orphan")

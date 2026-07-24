@@ -5,25 +5,50 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Inject Supabase auth token on every request
+// Inject auth token on every request
 api.interceptors.request.use(async (config) => {
   if (typeof window !== "undefined") {
-    const { createClient } = await import("@/lib/supabase");
-    const supabase = createClient();
-    const { data } = await supabase.auth.getSession();
-    if (data?.session?.access_token) {
-      config.headers.Authorization = `Bearer ${data.session.access_token}`;
+    const token = localStorage.getItem("phantom_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
   }
   return config;
 });
 
+// ── Auth & OAuth ──────────────────────────────────────────────────────────────
+export const authApi = {
+  getGitHubLoginUrl: () => api.get("/auth/github/login"),
+  githubCallback: (code: string) => api.post("/auth/github/callback", { code }),
+  getMe: () => api.get("/auth/me"),
+};
+
+// ── Workspaces ────────────────────────────────────────────────────────────────
+export const workspacesApi = {
+  list: () => api.get("/workspaces"),
+  get: (id: string) => api.get(`/workspaces/${id}`),
+  create: (data: { name: string; description?: string }) => api.post("/workspaces", data),
+};
+
+// ── GitHub App ────────────────────────────────────────────────────────────────
+export const githubAppApi = {
+  getInstallUrl: (workspaceId: string) => api.get("/github/app/install", { params: { workspace_id: workspaceId } }),
+  getInstallationRepos: (installationId: number) => api.get(`/github/app/installations/${installationId}/repos`),
+  connectRepo: (installationId: number, data: { project_id: string; github_repo_id: number; name: string; full_name: string; git_url: string; default_branch?: string }) =>
+    api.post(`/github/app/installations/${installationId}/connect-repo`, data),
+};
+
+// ── Monitoring ────────────────────────────────────────────────────────────────
+export const monitoringApi = {
+  get: (repoId: string) => api.get(`/repositories/${repoId}/monitoring`),
+  update: (repoId: string, data: any) => api.put(`/repositories/${repoId}/monitoring`, data),
+};
+
 // ── Projects ─────────────────────────────────────────────────────────────────
 export const projectsApi = {
   list: () => api.get("/projects"),
   get: (id: string) => api.get(`/projects/${id}`),
-  create: (data: { name: string; description?: string }) =>
-    api.post("/projects", data),
+  create: (data: { name: string; description?: string }) => api.post("/projects", data),
 };
 
 // ── Repositories ──────────────────────────────────────────────────────────────
@@ -40,27 +65,21 @@ export const tasksApi = {
 
 // ── Executions ────────────────────────────────────────────────────────────────
 export const executionsApi = {
-  create: (taskId: string) =>
-    api.post(`/tasks/${taskId}/executions`, {}),
+  create: (taskId: string) => api.post(`/tasks/${taskId}/executions`, {}),
   list: (taskId: string) => api.get(`/tasks/${taskId}/executions`),
-  get: (taskId: string, execId: string) =>
-    api.get(`/tasks/${taskId}/executions/${execId}`),
+  get: (taskId: string, execId: string) => api.get(`/tasks/${taskId}/executions/${execId}`),
 };
 
 // ── Memory ────────────────────────────────────────────────────────────────────
 export const memoryApi = {
-  getSession: (executionId: string) =>
-    api.get(`/memory/session/${executionId}`),
-  getProjectFacts: (projectId: string) =>
-    api.get(`/memory/project/${projectId}/facts`),
-  searchExperiences: (tags: string[]) =>
-    api.get("/memory/experiences/search", { params: { tags: tags.join(",") } }),
+  getSession: (executionId: string) => api.get(`/memory/session/${executionId}`),
+  getProjectFacts: (projectId: string) => api.get(`/memory/project/${projectId}/facts`),
+  searchExperiences: (tags: string[]) => api.get("/memory/experiences/search", { params: { tags: tags.join(",") } }),
 };
 
 // ── Repo Intel ────────────────────────────────────────────────────────────────
 export const repoIntelApi = {
-  search: (repositoryId: string, query: string) =>
-    api.get(`/repo-intel/${repositoryId}/search`, { params: { query } }),
+  search: (repositoryId: string, query: string) => api.get(`/repo-intel/${repositoryId}/search`, { params: { query } }),
 };
 
 export default api;

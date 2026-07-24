@@ -19,54 +19,42 @@ export function MemoryPane({ projectId }: { projectId: string }) {
   const { projectFacts, loading } = useMemory(snapshot?.execution_id, projectId);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#050508" }}>
-      {/* Header */}
+    <div className="flex flex-col h-full bg-[#0b0f19]">
       <div className="ide-pane-header">
-        <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.7rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-          🧠 Memory
+        <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider">
+          🧠 Multi-Tier Memory Store
         </span>
       </div>
 
-      {/* Tabs */}
-      <div style={{
-        display: "flex", gap: "0.25rem", padding: "0.5rem 0.75rem",
-        borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0,
-      }}>
+      <div className="flex gap-1.5 p-2 border-b border-white/[0.08] bg-[#111827] overflow-x-auto">
         {tabs.map((t) => (
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            style={{
-              padding: "0.25rem 0.625rem", borderRadius: "0.5rem", fontSize: "0.7rem",
-              fontWeight: 500, cursor: "pointer", border: "none", fontFamily: "var(--font-sans)",
-              background: activeTab === t.id ? "rgba(139,92,246,0.15)" : "transparent",
-              color: activeTab === t.id ? "#a78bfa" : "rgba(255,255,255,0.3)",
-              outline: activeTab === t.id ? "1px solid rgba(139,92,246,0.25)" : "none",
-              transition: "all 0.15s",
-            }}>
+            className={`px-3 py-1 rounded text-xs font-mono font-semibold transition-all ${
+              activeTab === t.id
+                ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
+                : "text-gray-400 hover:text-gray-200 hover:bg-white/[0.05]"
+            }`}>
             {t.icon} {t.label}
           </button>
         ))}
       </div>
 
-      {/* Content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "0.75rem" }}>
+      <div className="flex-1 overflow-y-auto p-4 font-mono text-xs">
         {activeTab === "session" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <div className="space-y-2">
             {sessionEvents.length === 0 ? (
-              <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.75rem", fontStyle: "italic" }}>No session events yet</p>
+              <p className="text-gray-500 italic">No session events recorded yet</p>
             ) : (
               sessionEvents.map((ev, i) => (
-                <div key={i} style={{
-                  background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-                  borderRadius: "0.75rem", padding: "0.5rem 0.75rem",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-                    <span style={{ color: "#a78bfa", fontFamily: "var(--font-mono)", fontSize: "0.7rem", fontWeight: 600 }}>{ev.type}</span>
-                    {ev.step != null && <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.7rem" }}>step {ev.step}</span>}
+                <div key={i} className="p-3 rounded-lg bg-[#111827] border border-white/[0.08]">
+                  <div className="flex items-center justify-between text-amber-400 font-bold mb-1">
+                    <span>{ev.type}</span>
+                    {ev.step != null && <span className="text-gray-500">step {ev.step}</span>}
                   </div>
                   {(ev.content || ev.output || ev.summary) && (
-                    <p style={{ color: "#94a3b8", fontSize: "0.7rem", lineHeight: 1.5, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                    <p className="text-gray-300 font-sans leading-relaxed line-clamp-2">
                       {ev.content || ev.output || ev.summary}
                     </p>
                   )}
@@ -79,13 +67,9 @@ export function MemoryPane({ projectId }: { projectId: string }) {
         {activeTab === "working" && (
           <div>
             {!snapshot || !snapshot.working_memory || Object.keys(snapshot.working_memory).length === 0 ? (
-              <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.75rem", fontStyle: "italic" }}>Working memory empty</p>
+              <p className="text-gray-500 italic">Working memory (transient state) empty</p>
             ) : (
-              <pre style={{
-                fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "#94a3b8",
-                background: "#0d0d14", borderRadius: "0.75rem", padding: "0.75rem",
-                border: "1px solid rgba(255,255,255,0.07)", whiteSpace: "pre-wrap", wordBreak: "break-all",
-              }}>
+              <pre className="p-3 rounded-lg bg-[#111827] border border-white/[0.08] text-gray-300 whitespace-pre-wrap">
                 {JSON.stringify(snapshot.working_memory, null, 2)}
               </pre>
             )}
@@ -95,18 +79,14 @@ export function MemoryPane({ projectId }: { projectId: string }) {
         {activeTab === "project" && (
           <div>
             {loading ? (
-              <p style={{ color: "#a78bfa", fontSize: "0.75rem", animation: "phantom-ping 1s ease-in-out infinite" }}>Loading…</p>
+              <p className="text-amber-400 status-ping">Fetching project facts…</p>
             ) : Object.keys(projectFacts).length === 0 ? (
-              <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.75rem", fontStyle: "italic" }}>No project facts stored yet</p>
+              <p className="text-gray-500 italic">No project facts stored in DB yet</p>
             ) : (
               Object.entries(projectFacts).map(([k, v]) => (
-                <div key={k} style={{
-                  display: "flex", justifyContent: "space-between", gap: "0.75rem",
-                  padding: "0.5rem 0", borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  fontSize: "0.75rem",
-                }}>
-                  <span style={{ color: "#a78bfa", fontFamily: "var(--font-mono)" }}>{k}</span>
-                  <span style={{ color: "#94a3b8", textAlign: "right" }}>{JSON.stringify(v)}</span>
+                <div key={k} className="flex justify-between p-2.5 border-b border-white/[0.06]">
+                  <span className="text-amber-400 font-bold">{k}</span>
+                  <span className="text-gray-300">{JSON.stringify(v)}</span>
                 </div>
               ))
             )}
@@ -114,8 +94,8 @@ export function MemoryPane({ projectId }: { projectId: string }) {
         )}
 
         {activeTab === "experience" && (
-          <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.75rem", fontStyle: "italic" }}>
-            Past solutions stored in DB after successful executions
+          <p className="text-gray-500 italic">
+            Past verified solution embeddings retrieved from vector database after successful executions
           </p>
         )}
       </div>

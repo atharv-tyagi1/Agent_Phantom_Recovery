@@ -54,6 +54,15 @@ export const projectsApi = {
 // ── Repositories ──────────────────────────────────────────────────────────────
 export const reposApi = {
   list: (projectId: string) => api.get(`/projects/${projectId}/repositories`),
+  importGitUrl: (projectId: string, gitUrl: string, defaultBranch: string = "main") =>
+    api.post(`/projects/${projectId}/repositories/import-url`, { git_url: gitUrl, default_branch: defaultBranch }),
+  uploadCodebaseZip: (projectId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return api.post(`/projects/${projectId}/repositories/upload-zip`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
 };
 
 // ── Tasks ─────────────────────────────────────────────────────────────────────

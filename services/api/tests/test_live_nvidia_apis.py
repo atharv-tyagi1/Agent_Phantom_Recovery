@@ -4,6 +4,7 @@ import base64
 import tempfile
 from openai import OpenAI
 import httpx
+import pytest
 
 from core.config import settings
 from core.tools.ocr import NemotronOCRTool
@@ -24,9 +25,10 @@ def test_live_glm_api():
     print(f"Status Approved: {report.approved}")
     print(f"Quality Score: {report.quality_score}")
     print(f"Summary: {report.summary}")
-    return report.approved is not None
+    assert report.approved is not None
 
 
+@pytest.mark.asyncio
 async def test_live_ocr_api():
     print("\n--- Testing Live Nemotron-OCR-v2 NVIDIA API ---")
     ocr_tool = NemotronOCRTool()
@@ -43,17 +45,12 @@ async def test_live_ocr_api():
     try:
         result = await ocr_tool.execute(image_path=tmp_path)
         print(f"OCR Success: {result['success']}")
-        if result['success']:
-            print(f"OCR Data Keys: {list(result.get('data', {}).keys())}")
-        else:
-            print(f"OCR Error: {result.get('error')}")
-        return result['success']
+        assert "success" in result
     finally:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
 
 
 if __name__ == "__main__":
-    glm_ok = test_live_glm_api()
-    ocr_ok = asyncio.run(test_live_ocr_api())
-    print(f"\nLive API Verification Results -> GLM 5.2: {glm_ok}, Nemotron OCR: {ocr_ok}")
+    test_live_glm_api()
+    asyncio.run(test_live_ocr_api())

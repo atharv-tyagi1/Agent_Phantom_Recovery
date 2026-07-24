@@ -28,15 +28,15 @@ const paneComponents: Record<PaneId, React.ComponentType<{ projectId: string }>>
 };
 
 const paneLabels: Record<PaneId, string> = {
-  chat: "Chat",
-  code: "Code",
-  terminal: "Terminal",
-  browser: "Browser",
-  memory: "Memory",
-  timeline: "Timeline",
+  chat: "Chat & Reasoning",
+  code: "Monaco Code",
+  terminal: "Terminal Stream",
+  browser: "Browser Preview",
+  memory: "Multi-Tier Memory",
+  timeline: "Execution Timeline",
 };
 
-export function IDEShell({ projectId, projectName }: IDEShellProps) {
+export function IDEShell({ projectId, projectName = "Agent Phantom" }: IDEShellProps) {
   const [primaryPane, setPrimaryPane] = useState<PaneId>("chat");
   const [secondaryPane, setSecondaryPane] = useState<PaneId>("code");
   const [showSecondary, setShowSecondary] = useState(true);
@@ -60,72 +60,63 @@ export function IDEShell({ projectId, projectName }: IDEShellProps) {
           projectName={projectName}
         />
 
-        {/* Main Area */}
+        {/* Main Workspace Area */}
         <div className="ide-main">
-          {/* Top bar */}
+          {/* Topbar */}
           <header className="ide-topbar">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-1.5 text-sm flex-1 min-w-0">
-              <span className="text-white font-semibold">Agent Phantom</span>
-              {projectName && (
-                <>
-                  <svg className="w-3 h-3 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                  <span className="text-slate-400 text-xs truncate">{projectName}</span>
-                </>
-              )}
+            <div className="flex items-center gap-2 text-xs flex-1 min-w-0 font-medium">
+              <span className="text-amber-400 font-bold tracking-tight text-sm">Agent Phantom</span>
+              <span className="text-gray-600">/</span>
+              <span className="text-gray-300 font-mono truncate">{projectName}</span>
+              <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                Closed-Loop Engine
+              </span>
             </div>
 
-            {/* Active pane pill */}
-            <div className="hidden sm:flex items-center gap-1 text-xs text-slate-500">
-              <span
-                className="px-2 py-1 rounded-md text-xs font-medium"
-                style={{ background: "rgba(139,92,246,0.15)", color: "#a78bfa", border: "1px solid rgba(139,92,246,0.25)" }}>
+            {/* View Pill Indicators */}
+            <div className="hidden md:flex items-center gap-1.5 text-xs font-mono">
+              <span className="px-2.5 py-1 rounded text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
                 {paneLabels[primaryPane]}
               </span>
               {showSecondary && (
                 <>
-                  <span className="text-white/20">↕</span>
-                  <span
-                    className="px-2 py-1 rounded-md text-xs font-medium"
-                    style={{ background: "rgba(6,182,212,0.12)", color: "#22d3ee", border: "1px solid rgba(6,182,212,0.2)" }}>
+                  <span className="text-gray-600">↔</span>
+                  <span className="px-2.5 py-1 rounded text-xs font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30">
                     {paneLabels[secondaryPane]}
                   </span>
                 </>
               )}
             </div>
 
-            {/* Controls */}
+            {/* Pane Controls */}
             <div className="flex items-center gap-2">
               <select
                 value={secondaryPane}
                 onChange={(e) => setSecondaryPane(e.target.value as PaneId)}
-                className="text-xs rounded-lg px-2 py-1.5 text-slate-300 outline-none cursor-pointer"
-                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", fontFamily: "inherit" }}>
+                className="text-xs rounded px-2.5 py-1 text-gray-200 outline-none cursor-pointer bg-gray-800/80 border border-white/[0.1] font-mono">
                 {allPanes.map((p) => (
-                  <option key={p} value={p} style={{ background: "#0d0d14" }}>
+                  <option key={p} value={p} className="bg-[#111827]">
                     {paneLabels[p]}
                   </option>
                 ))}
               </select>
               <button
                 onClick={() => setShowSecondary((s) => !s)}
-                className="text-xs px-3 py-1.5 rounded-lg font-medium transition-all"
-                style={{
-                  background: showSecondary ? "rgba(139,92,246,0.15)" : "rgba(255,255,255,0.05)",
-                  border: showSecondary ? "1px solid rgba(139,92,246,0.3)" : "1px solid rgba(255,255,255,0.09)",
-                  color: showSecondary ? "#a78bfa" : "#94a3b8",
-                }}>
-                {showSecondary ? "⊟ Split" : "⊞ Split"}
+                className={`text-xs px-3 py-1 rounded font-semibold transition-all ${
+                  showSecondary
+                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
+                    : "bg-gray-800 text-gray-400 border border-white/[0.1]"
+                }`}>
+                {showSecondary ? "⊟ Split View" : "⊞ Split View"}
               </button>
             </div>
           </header>
 
-          {/* Pane Area */}
+          {/* Pane Workspace Area */}
           <div className="ide-pane-area">
             {/* Primary Pane */}
-            <div
-              className="ide-pane"
-              style={{ width: showSecondary ? "50%" : "100%" }}>
+            <div className="ide-pane" style={{ width: showSecondary ? "50%" : "100%" }}>
               <PrimaryComponent projectId={projectId} />
             </div>
 

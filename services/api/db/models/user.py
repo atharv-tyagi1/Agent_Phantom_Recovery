@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, DateTime, Enum as SQLEnum
+from sqlalchemy import Column, String, DateTime, BigInteger, Enum as SQLEnum
 from db.session import Base
 import enum
 
@@ -14,7 +14,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    supabase_id = Column(String, unique=True, nullable=False, index=True)
+    supabase_id = Column(String, unique=True, nullable=True, index=True)
+    github_user_id = Column(BigInteger, unique=True, nullable=True, index=True)
+    github_username = Column(String(255), nullable=True)
     email = Column(String, unique=True, nullable=False, index=True)
     display_name = Column(String, nullable=True)
     avatar_url = Column(String, nullable=True)

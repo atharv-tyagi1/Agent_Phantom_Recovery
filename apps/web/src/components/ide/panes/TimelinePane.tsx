@@ -5,17 +5,15 @@ import { useExecution, SessionEvent } from "@/contexts/execution-context";
 function TimelineRow({ event, index }: { event: SessionEvent; index: number }) {
   if (event.type === "state_change") {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", padding: "0.375rem 0" }}>
-        <div style={{ width: 24, flexShrink: 0, display: "flex", justifyContent: "center" }}>
-          <span style={{ fontSize: "0.75rem" }}>
-            {event.status === "COMPLETED" ? "✅" : event.status === "FAILED" ? "❌" : "→"}
-          </span>
+      <div className="flex items-center gap-3 py-2">
+        <div className="w-6 flex justify-center text-amber-400 font-bold text-xs font-mono">
+          →
         </div>
-        <span style={{ fontSize: "0.7rem", color: "rgba(139,92,246,0.7)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
-          {event.status}
+        <span className="text-xs font-mono font-bold text-amber-400">
+          STATE: {event.status}
         </span>
         {event.timestamp && (
-          <span style={{ marginLeft: "auto", fontSize: "0.65rem", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+          <span className="ml-auto text-[10px] font-mono text-gray-500">
             {new Date(event.timestamp).toLocaleTimeString()}
           </span>
         )}
@@ -25,26 +23,15 @@ function TimelineRow({ event, index }: { event: SessionEvent; index: number }) {
 
   if (event.type === "global_review_audit") {
     return (
-      <div style={{
-        display: "flex", alignItems: "flex-start", gap: "0.625rem",
-        padding: "0.5rem 0.625rem", borderRadius: "0.625rem", margin: "0.25rem 0",
-        background: event.approved ? "rgba(52,211,153,0.06)" : "rgba(251,146,60,0.06)",
-        border: `1px solid ${event.approved ? "rgba(52,211,153,0.15)" : "rgba(251,146,60,0.15)"}`,
-      }}>
-        <span style={{ flexShrink: 0, fontSize: "0.8rem" }}>{event.approved ? "✅" : "🔄"}</span>
-        <div>
-          <div style={{ fontSize: "0.7rem", fontWeight: 600, color: event.approved ? "#34d399" : "#fb923c" }}>
-            GLM 5.2 Review — {event.approved ? "Approved" : "Rejected"}
-          </div>
+      <div className={`p-3 rounded-lg my-1 border ${
+        event.approved ? "bg-emerald-500/10 border-emerald-500/30" : "bg-orange-500/10 border-orange-500/30"
+      }`}>
+        <div className="flex items-center justify-between text-xs font-bold font-mono">
+          <span className={event.approved ? "text-emerald-400" : "text-orange-400"}>
+            {event.approved ? "✅ GLM 5.2 Approved" : "🔄 GLM 5.2 Re-Plan Audit"}
+          </span>
           {event.quality_score != null && (
-            <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", marginTop: "0.125rem" }}>
-              {(event.quality_score * 100).toFixed(0)}% quality score
-            </div>
-          )}
-          {!event.approved && event.actionable_fix && (
-            <div style={{ fontSize: "0.65rem", color: "#67e8f9", marginTop: "0.375rem", fontFamily: "var(--font-mono)" }}>
-              Fix: {event.actionable_fix.slice(0, 80)}
-            </div>
+            <span className="text-gray-400">{(event.quality_score * 100).toFixed(0)}% Score</span>
           )}
         </div>
       </div>
@@ -53,16 +40,11 @@ function TimelineRow({ event, index }: { event: SessionEvent; index: number }) {
 
   if (event.type === "thought") {
     return (
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "0.625rem", padding: "0.3rem 0" }}>
-        <div style={{ width: 24, flexShrink: 0, display: "flex", justifyContent: "center" }}>
-          <span style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)", marginTop: "0.15rem" }}>
-            {String(event.step ?? index).padStart(2, "0")}
-          </span>
+      <div className="flex items-start gap-3 py-1.5">
+        <div className="w-6 text-center text-gray-500 font-mono text-[10px] pt-0.5">
+          {String(event.step ?? index).padStart(2, "0")}
         </div>
-        <p style={{
-          fontSize: "0.7rem", color: "#64748b", lineHeight: 1.5, flex: 1,
-          overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
-        }}>
+        <p className="text-xs text-gray-300 flex-1 leading-relaxed font-sans line-clamp-2">
           {event.content}
         </p>
       </div>
@@ -71,21 +53,14 @@ function TimelineRow({ event, index }: { event: SessionEvent; index: number }) {
 
   if (event.type === "tool_observation") {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", padding: "0.3rem 0" }}>
-        <div style={{ width: 24, flexShrink: 0, display: "flex", justifyContent: "center" }}>
-          <span style={{ fontSize: "0.625rem", color: event.success ? "#34d399" : "#fb7185" }}>
-            {event.success ? "▶" : "✗"}
-          </span>
+      <div className="flex items-center gap-3 py-1">
+        <div className={`w-6 text-center text-xs font-bold ${event.success ? "text-emerald-400" : "text-rose-400"}`}>
+          {event.success ? "▶" : "✗"}
         </div>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "#22d3ee" }}>{event.tool_name}</span>
-        <span style={{ fontSize: "0.65rem", color: event.success ? "#34d399" : "#fb7185" }}>
+        <span className="font-mono text-xs text-blue-400 font-bold">{event.tool_name}</span>
+        <span className={`text-[10px] font-mono font-bold ${event.success ? "text-emerald-400" : "text-rose-400"}`}>
           {event.success ? "ok" : "err"}
         </span>
-        {event.timestamp && (
-          <span style={{ marginLeft: "auto", fontSize: "0.65rem", color: "rgba(255,255,255,0.15)", fontFamily: "var(--font-mono)" }}>
-            {new Date(event.timestamp).toLocaleTimeString()}
-          </span>
-        )}
       </div>
     );
   }
@@ -97,54 +72,47 @@ export function TimelinePane({ projectId }: { projectId: string }) {
   const { sessionEvents, snapshot } = useExecution();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#050508" }}>
-      {/* Header */}
-      <div className="ide-pane-header">
-        <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.7rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-          📋 Timeline
+    <div className="flex flex-col h-full bg-[#0b0f19]">
+      <div className="ide-pane-header justify-between">
+        <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider">
+          📋 Execution Step Timeline
         </span>
         {snapshot && (
-          <span style={{ marginLeft: "auto", fontSize: "0.7rem", color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
-            {snapshot.current_step} / {snapshot.max_steps}
+          <span className="text-xs font-mono text-gray-500">
+            Step {snapshot.current_step}/{snapshot.max_steps}
           </span>
         )}
       </div>
 
-      {/* Steps */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "0.75rem" }}>
+      <div className="flex-1 overflow-y-auto p-4">
         {sessionEvents.length === 0 ? (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", paddingTop: "2rem", color: "rgba(255,255,255,0.2)" }}>
-            <span style={{ fontSize: "1.5rem" }}>📋</span>
-            <p style={{ fontSize: "0.75rem" }}>No execution steps yet</p>
+          <div className="flex flex-col items-center justify-center h-32 gap-2 text-gray-500">
+            <span className="text-2xl">📋</span>
+            <p className="text-xs font-mono">No step progression logged yet</p>
           </div>
         ) : (
-          <div style={{ position: "relative" }}>
-            {/* Vertical line */}
-            <div style={{
-              position: "absolute", left: 11, top: 16, bottom: 16, width: 1,
-              background: "rgba(255,255,255,0.05)",
-            }} />
-            <div>
-              {sessionEvents.map((ev, i) => (
-                <TimelineRow key={i} event={ev} index={i} />
-              ))}
-            </div>
+          <div className="space-y-1">
+            {sessionEvents.map((ev, i) => (
+              <TimelineRow key={i} event={ev} index={i} />
+            ))}
           </div>
         )}
       </div>
 
-      {/* Checkpoints footer */}
       {snapshot?.checkpoint_hashes && snapshot.checkpoint_hashes.length > 0 && (
-        <div style={{
-          padding: "0.5rem 0.75rem", borderTop: "1px solid rgba(255,255,255,0.05)", flexShrink: 0,
-        }}>
-          <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.2)", marginBottom: "0.375rem" }}>Git Checkpoints</div>
-          {snapshot.checkpoint_hashes.map((hash, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.65rem" }}>
-              <span style={{ color: "rgba(255,255,255,0.15)" }}>●</span>
-              <span style={{ fontFamily: "var(--font-mono)", color: "#64748b" }}>{hash.slice(0, 8)}</span>
-            </div>
-          ))}
+        <div className="p-3 border-t border-white/[0.08] bg-[#111827]">
+          <div className="text-[10px] font-mono font-bold text-gray-400 uppercase tracking-wider mb-2">
+            Git Checkpoint Rollback History
+          </div>
+          <div className="space-y-1">
+            {snapshot.checkpoint_hashes.map((hash, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs font-mono">
+                <span className="text-amber-400">●</span>
+                <span className="text-gray-300 font-bold">{hash.slice(0, 8)}</span>
+                <span className="text-gray-500 text-[10px]">Checkpoint #{i + 1}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

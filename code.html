@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AGENT PHANTOM RECOVERY - Autonomous Security &amp; Engineering</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-dim": "#131313",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary": "#67f4b7",
+                        "on-primary-container": "#6a4700",
+                        "on-background": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-fixed": "#d8e2ff",
+                        "primary-fixed-dim": "#ffba43",
+                        "tertiary-container": "#45d79c",
+                        "on-primary-fixed-variant": "#614000",
+                        "on-error": "#690005",
+                        "inverse-primary": "#805600",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#201f1f",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#d7c4ac",
+                        "on-secondary-fixed-variant": "#004493",
+                        "surface": "#131313",
+                        "primary-fixed": "#ffddaf",
+                        "on-primary-fixed": "#281800",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary": "#003824",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-fixed": "#001a41",
+                        "on-tertiary-container": "#00593c",
+                        "on-secondary-container": "#00285c",
+                        "outline-variant": "#524533",
+                        "inverse-surface": "#e5e2e1",
+                        "outline": "#9f8e78",
+                        "error-container": "#93000a",
+                        "primary-container": "#ffb000",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary": "#002e69",
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary": "#adc6ff",
+                        "secondary-container": "#4b8eff",
+                        "primary": "#ffd597",
+                        "on-primary": "#432c00",
+                        "surface-tint": "#ffba43",
+                        "surface-variant": "#353534",
+                        "background": "#131313"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        "stack-md": "16px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "stack-sm": "8px",
+                        "container-max": "1440px",
+                        "stack-xs": "4px",
+                        "gutter": "24px",
+                        "stack-lg": "32px",
+                        "unit": "4px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Geist", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "mono-label": ["JetBrains Mono", "monospace"],
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "mono-data": ["JetBrains Mono", "monospace"]
+                    },
+                    fontSize: {
+                        "headline-md": ["20px", { lineHeight: "1.4", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "mono-label": ["12px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "mono-data": ["13px", { lineHeight: "1.4", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0E0E0E; color: #e5e2e1; }
+        .glass-panel {
+            background: rgba(22, 22, 22, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(82, 69, 51, 0.3);
+            border-top: 1px solid rgba(159, 142, 120, 0.2);
+        }
+        .glow-amber {
+            box-shadow: 0 0 15px rgba(255, 176, 0, 0.2);
+        }
+        .glow-amber-hover:hover {
+            box-shadow: 0 0 25px rgba(255, 176, 0, 0.3);
+            border-color: rgba(255, 176, 0, 0.5);
+        }
+        .hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.923' viewBox='0 0 60 103.923' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 17.32v34.64L30 69.28 0 51.96V17.32zM30 34.64l15 8.66v17.32l-15 8.66-15-8.66v-17.32z' fill='%23524533' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        /* Reveal animation utility */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center h-16 px-margin-desktop max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary">PHANTOM RECOVERY</div>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-highest/50 transition-all duration-300 px-3 py-1 rounded font-body-md text-body-md" href="#systems">Systems</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-highest/50 transition-all duration-300 px-3 py-1 rounded font-body-md text-body-md" href="#protocols">Protocols</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-highest/50 transition-all duration-300 px-3 py-1 rounded font-body-md text-body-md" href="#architecture">Architecture</a>
+<a class="text-primary border-b-2 border-primary pb-1 px-3 py-1 font-body-md text-body-md" href="#terminal">Terminal</a>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:flex items-center justify-center p-2 rounded-full hover:bg-surface-container-highest/50 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</button>
+<button class="hidden md:flex items-center justify-center p-2 rounded-full hover:bg-surface-container-highest/50 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</button>
+<button class="bg-primary-container text-on-primary-container font-mono-label text-mono-label uppercase tracking-widest px-4 py-2 rounded shadow-sm hover:bg-primary-fixed active:scale-95 transition-all glow-amber font-semibold">Deploy Agent</button>
+</div>
+</nav>
+<main class="relative z-10 pt-24 pb-32">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex flex-col justify-center items-center px-margin-desktop overflow-hidden border-b border-outline-variant/20 hex-pattern">
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+
+</div>
+<div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary-container/30 bg-primary-container/10 text-primary-container font-mono-label text-mono-label mb-8">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                    SYSTEM ONLINE. READY FOR INJECTION.
+                </div>
+<h1 class="font-display-lg text-display-lg md:text-[72px] md:leading-[1.1] font-bold text-on-surface mb-6 tracking-tight drop-shadow-2xl">
+                    Autonomous Engineering. <br/>
+<span class="text-primary-container">Verified Recovery.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10">
+                    Agent Phantom is a long-horizon autonomous system that investigates, fixes, and verifies code with mission-critical precision. Elevate your engineering pipeline beyond standard autocomplete.
+                </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="w-full sm:w-auto bg-primary-container text-on-primary-container font-mono-label text-mono-label uppercase tracking-widest px-8 py-4 rounded hover:bg-primary-fixed active:scale-95 transition-all glow-amber font-bold">
+                        Launch Agent
+                    </button>
+<button class="w-full sm:w-auto glass-panel text-secondary hover:text-secondary-fixed hover:glow-amber-hover font-mono-label text-mono-label uppercase tracking-widest px-8 py-4 rounded transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">hub</span>
+                        View Architecture
+                    </button>
+</div>
+</div>
+</section>
+<!-- Value Bar -->
+<div class="border-b border-outline-variant/20 bg-surface-container-lowest/80 backdrop-blur-sm sticky top-16 z-40 overflow-x-auto hide-scrollbar">
+<div class="max-w-container-max mx-auto px-margin-desktop py-4 flex gap-8 items-center justify-start md:justify-center min-w-max">
+<div class="flex items-center gap-2 text-on-surface-variant font-mono-data text-mono-data"><span class="material-symbols-outlined text-primary-container text-sm">psychology</span> Autonomous Planning</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant/50"></div>
+<div class="flex items-center gap-2 text-on-surface-variant font-mono-data text-mono-data"><span class="material-symbols-outlined text-primary-container text-sm">troubleshoot</span> Repository Analysis</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant/50"></div>
+<div class="flex items-center gap-2 text-on-surface-variant font-mono-data text-mono-data"><span class="material-symbols-outlined text-primary-container text-sm">loop</span> Verification Loop</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant/50"></div>
+<div class="flex items-center gap-2 text-on-surface-variant font-mono-data text-mono-data"><span class="material-symbols-outlined text-primary-container text-sm">security</span> Rollback Safety</div>
+</div>
+</div>
+<!-- Dashboard Showcase -->
+<section class="py-24 px-margin-desktop max-w-container-max mx-auto reveal" id="terminal">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Mission Control Interface</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">Real-time telemetry and execution logs streamed directly from the agent's neural net during recovery operations.</p>
+</div>
+<div class="glass-panel p-2 rounded-xl relative group overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/5 to-transparent pointer-events-none"></div>
+<div class="flex items-center gap-2 px-4 py-2 border-b border-outline-variant/30 mb-2">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary-container"></div>
+<div class="ml-4 font-mono-label text-mono-label text-on-surface-variant flex-1 text-center opacity-50">agent_phantom_recovery.exe - Mission Status</div>
+</div>
+<img alt="Dashboard UI showing drone telemetry, file tree, verification loop, and terminal output" class="w-full h-auto rounded border border-outline-variant/20 shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3HdsULBzADhZzKPd6shAW96kjbQ6CSOyDvjCQ7Dv2M7YxD5GnYM9LuGlm3cH433Ndd86hHQKlxsA66M-_DM1RVC0ovyD_GadDBN4xo2Ublo3FnPdovS4jvDUzQC2D-TJIwW4EKtERoDcCWl3qlpoJu9-9N6DX9XlymgEHJbBx1PVOuwBFP1sTntHh3KHjMcDfdfqtMe1jBeMwOGESWmzOGvBgoZWjjmaxNuol54nDGSVOKuiXD8eUuj31Pn0LUdt3BOi-iIEY7_4"/>
+<!-- Overlay decorative elements -->
+<div class="absolute top-1/4 -left-4 w-1 h-32 bg-primary-container/50 blur-sm"></div>
+<div class="absolute bottom-1/4 -right-4 w-1 h-32 bg-tertiary-container/50 blur-sm"></div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-24 px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/20 hex-pattern" id="systems">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-12 text-center reveal">Core Capabilities</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+<!-- Planning -->
+<div class="glass-panel p-6 rounded-lg flex flex-col justify-between hover:glow-amber-hover transition-all reveal md:col-span-2 group cursor-default">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-4xl text-primary-container group-hover:scale-110 transition-transform">schema</span>
+<span class="font-mono-label text-mono-label text-outline px-2 py-1 bg-surface-container rounded">SYS_01</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Multi-Step Planning</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Breaks down complex issues into discrete, verifiable steps before writing a single line of code. Generates a strategic blueprint for recovery.</p>
+</div>
+</div>
+<!-- Memory -->
+<div class="glass-panel p-6 rounded-lg flex flex-col justify-between hover:glow-amber-hover transition-all reveal group cursor-default">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-4xl text-tertiary-container group-hover:scale-110 transition-transform">memory</span>
+<span class="font-mono-label text-mono-label text-outline px-2 py-1 bg-surface-container rounded">MEM_Core</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Persistent Context</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Retains repository knowledge across sessions.</p>
+</div>
+</div>
+<!-- Analysis -->
+<div class="glass-panel p-6 rounded-lg flex flex-col justify-between hover:glow-amber-hover transition-all reveal group cursor-default">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-4xl text-secondary group-hover:scale-110 transition-transform">analytics</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Deep Static Analysis</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Traces variables and data flow across multiple files to identify root causes.</p>
+</div>
+</div>
+<!-- Execution -->
+<div class="glass-panel p-6 rounded-lg flex flex-col justify-between hover:glow-amber-hover transition-all reveal md:col-span-2 group cursor-default">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-4xl text-primary-container group-hover:scale-110 transition-transform">terminal</span>
+<div class="flex gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Autonomous Execution &amp; Verification</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Writes patches, runs local tests in a sandboxed environment, and iteratively corrects errors until the verification loop passes cleanly.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-margin-desktop text-center relative border-t border-outline-variant/20 bg-surface-container-lowest">
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl mx-auto reveal">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-6">Initialize Recovery.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">Deploy Agent Phantom to secure and stabilize your codebase today.</p>
+<button class="bg-primary-container text-on-primary-container font-mono-label text-mono-label uppercase tracking-widest px-10 py-5 rounded hover:bg-primary-fixed active:scale-95 transition-all glow-amber font-bold text-lg">
+                    Begin Deployment
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg bg-surface-container-lowest border-t border-outline-variant/20 grid grid-cols-1 md:grid-cols-2 gap-stack-md px-margin-desktop max-w-container-max mx-auto relative z-50">
+<div>
+<div class="font-headline-lg text-headline-lg font-black text-on-surface mb-4 tracking-tighter">PHANTOM RECOVERY</div>
+<div class="font-mono-label text-mono-label uppercase tracking-widest text-tertiary">
+                © 2024 AGENT PHANTOM RECOVERY. ALL RIGHTS RESERVED.
+            </div>
+</div>
+<div class="flex flex-wrap gap-4 md:justify-end items-start font-mono-label text-mono-label uppercase tracking-widest text-on-surface-variant">
+<a class="hover:text-tertiary-fixed-dim transition-colors hover:opacity-80" href="#">Legal</a>
+<a class="hover:text-tertiary-fixed-dim transition-colors hover:opacity-80" href="#">Security</a>
+<a class="hover:text-tertiary-fixed-dim transition-colors hover:opacity-80" href="#">API Documentation</a>
+<a class="hover:text-tertiary-fixed-dim transition-colors hover:opacity-80" href="#">Status</a>
+</div>
+</footer>
+<script>
+        // Simple scroll reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+                
+                reveals.forEach(reveal => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger once on load
+        });
+    </script>
+</body></html>

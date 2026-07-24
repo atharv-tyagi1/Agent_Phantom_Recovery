@@ -10,3 +10,4 @@ PyJWT
 httpx
 tenacity
 openai
+cryptography

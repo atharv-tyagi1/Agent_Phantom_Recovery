@@ -1,0 +1,91 @@
+name: Production Readiness CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-backend:
+    name: Backend Test Suite & Gate Check
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r services/api/requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+
+      - name: Run Pytest Test Suite
+        env:
+          PYTHONPATH: services/api
+          SUPABASE_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+          REDIS_URL: redis://localhost:6379/0
+        run: |
+          pytest services/api/tests/
+
+      - name: Execute Automated Production Readiness Release Gate
+        env:
+          PYTHONPATH: services/api
+          SUPABASE_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+          REDIS_URL: redis://localhost:6379/0
+        run: |
+          python services/api/scripts/production_readiness_gate.py
+
+  typecheck-frontend:
+    name: Frontend TypeScript Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: apps/web/package.json
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd apps/web
+          npm ci
+
+      - name: TypeScript Typecheck
+        run: |
+          cd apps/web
+          npx tsc --noEmit

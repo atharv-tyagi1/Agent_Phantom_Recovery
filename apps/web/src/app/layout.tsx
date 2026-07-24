@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agent Phantom Recovery",
+  title: "AGENT PHANTOM RECOVERY - Autonomous Security & Engineering",
   description:
-    "Autonomous engineering system for complex problem-solving, bug fixing, and codebase recovery.",
+    "Autonomous engineering system for complex problem-solving, bug fixing, vulnerability remediation, and codebase recovery.",
 };
 
 export default function RootLayout({
@@ -27,9 +27,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-neutral-950">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#0E0E0E] text-[#e5e2e1] selection:bg-[#ffb000] selection:text-[#6a4700]">
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
